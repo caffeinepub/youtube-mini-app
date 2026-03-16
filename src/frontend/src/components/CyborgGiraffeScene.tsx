@@ -11,187 +11,157 @@ export default function CyborgGiraffeScene() {
     >
       <svg
         role="img"
-        aria-label="Cyborg giraffe crypto background scene"
-        viewBox="0 0 400 700"
+        aria-label="Neon alien giraffe smoking a joint with boombox and TV background scene"
+        viewBox="0 0 420 800"
         xmlns="http://www.w3.org/2000/svg"
         style={{
           position: "absolute",
           bottom: 0,
-          right: "-20px",
-          width: "min(420px, 100vw)",
+          left: "-10px",
+          width: "min(440px, 100vw)",
           height: "auto",
-          opacity: 0.38,
+          opacity: 0.46,
         }}
       >
+        <defs>
+          <radialGradient id="tvGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#aaff00" stopOpacity="0.35" />
+            <stop offset="50%" stopColor="#cc00ff" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#003300" stopOpacity="0.04" />
+          </radialGradient>
+          <radialGradient id="bodyAura" cx="50%" cy="40%" r="55%">
+            <stop offset="0%" stopColor="#cc00ff" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#9900cc" stopOpacity="0" />
+          </radialGradient>
+          <filter id="neonGlow">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="softGlow">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
         <style>{`
-          .giraffe-body { animation: giraffeBody 2.4s ease-in-out infinite alternate; transform-origin: 200px 500px; }
-          @keyframes giraffeBody {
-            0%   { transform: translateY(0px) rotate(-0.8deg); }
-            100% { transform: translateY(-8px) rotate(0.8deg); }
+          .giraffe-body { animation: giraffeSway 2.8s ease-in-out infinite alternate; transform-origin: 160px 600px; }
+          @keyframes giraffeSway {
+            0%   { transform: translateY(0) rotate(-0.7deg); }
+            100% { transform: translateY(-7px) rotate(0.7deg); }
           }
-          .smoke1 { animation: smokePuff1 2.2s ease-in-out infinite; transform-origin: 258px 295px; }
-          .smoke2 { animation: smokePuff2 2.2s ease-in-out infinite 0.7s; transform-origin: 253px 280px; }
-          .smoke3 { animation: smokePuff3 2.2s ease-in-out infinite 1.4s; transform-origin: 248px 265px; }
-          .smoke4 { animation: smokePuff4 2.8s ease-in-out infinite 0.3s; transform-origin: 244px 252px; }
-          .smoke5 { animation: smokePuff5 3.2s ease-in-out infinite 1.1s; transform-origin: 240px 238px; }
-          @keyframes smokePuff1 {
-            0%   { transform: translateY(0) scale(1); opacity: 0.9; }
-            60%  { transform: translateY(-32px) translateX(4px) scale(1.8); opacity: 0.5; }
-            100% { transform: translateY(-60px) translateX(8px) scale(2.6); opacity: 0; }
+          /* alien eye glow */
+          .eye-l { animation: eyeL 2s ease-in-out infinite alternate; }
+          .eye-r { animation: eyeR 2.4s ease-in-out infinite alternate; }
+          @keyframes eyeL {
+            0%   { opacity:0.7; }
+            100% { opacity:1; filter: drop-shadow(0 0 8px #00ffcc); }
           }
-          @keyframes smokePuff2 {
-            0%   { transform: translateY(0) scale(0.9); opacity: 0.8; }
-            60%  { transform: translateY(-30px) translateX(-3px) scale(1.6); opacity: 0.4; }
-            100% { transform: translateY(-56px) translateX(-6px) scale(2.3); opacity: 0; }
+          @keyframes eyeR {
+            0%   { opacity:0.65; }
+            100% { opacity:1; filter: drop-shadow(0 0 8px #cc00ff); }
           }
-          @keyframes smokePuff3 {
-            0%   { transform: translateY(0) scale(0.8); opacity: 0.75; }
-            60%  { transform: translateY(-28px) translateX(5px) scale(1.5); opacity: 0.35; }
-            100% { transform: translateY(-52px) translateX(10px) scale(2.1); opacity: 0; }
+          /* neon outline pulse */
+          .neon-outline { animation: neonPulse 2.6s ease-in-out infinite alternate; }
+          @keyframes neonPulse {
+            0%   { filter: drop-shadow(0 0 3px #cc00ff); }
+            100% { filter: drop-shadow(0 0 12px #cc00ff) drop-shadow(0 0 22px #9900ff); }
           }
-          @keyframes smokePuff4 {
-            0%   { transform: translateY(0) scale(1.1); opacity: 0.65; }
-            60%  { transform: translateY(-35px) translateX(-4px) scale(2); opacity: 0.28; }
-            100% { transform: translateY(-65px) translateX(-8px) scale(2.8); opacity: 0; }
-          }
-          @keyframes smokePuff5 {
-            0%   { transform: translateY(0) scale(1.2); opacity: 0.55; }
-            60%  { transform: translateY(-40px) translateX(6px) scale(2.2); opacity: 0.2; }
-            100% { transform: translateY(-75px) translateX(12px) scale(3); opacity: 0; }
-          }
-          .boombox-speaker { animation: speakerPulse 0.6s ease-in-out infinite alternate; transform-origin: 90px 600px; }
-          @keyframes speakerPulse {
-            0%   { transform: scale(0.97); }
-            100% { transform: scale(1.03); }
-          }
-          .tv-screen { animation: tvFlicker 2.1s steps(1) infinite; }
-          @keyframes tvFlicker {
-            0%   { opacity: 0.88; }
-            14%  { opacity: 1; }
-            28%  { opacity: 0.82; }
-            42%  { opacity: 0.96; }
-            57%  { opacity: 0.78; }
-            71%  { opacity: 1; }
-            85%  { opacity: 0.9; }
-            100% { opacity: 0.85; }
-          }
-          .robotic-eye-glow { animation: eyeGlow 1.8s ease-in-out infinite alternate; }
-          @keyframes eyeGlow {
-            0%   { opacity: 0.7; r: 4; }
-            100% { opacity: 1; r: 5.5; }
-          }
-          .btc-float { animation: cryptoFloat1 6s ease-in-out infinite; }
-          .eth-float { animation: cryptoFloat2 7s ease-in-out infinite 1s; }
-          .doge-float { animation: cryptoFloat3 5.5s ease-in-out infinite 2s; }
-          .sol-float { animation: cryptoFloat4 8s ease-in-out infinite 0.5s; }
-          .moon-float { animation: moonFloat 4s ease-in-out infinite alternate; }
-          @keyframes cryptoFloat1 {
-            0%   { transform: translateY(0) rotate(0deg); opacity: 0.9; }
-            50%  { transform: translateY(-18px) rotate(8deg); opacity: 1; }
-            100% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
-          }
-          @keyframes cryptoFloat2 {
-            0%   { transform: translateY(0) rotate(0deg); opacity: 0.85; }
-            50%  { transform: translateY(-22px) rotate(-6deg); opacity: 1; }
-            100% { transform: translateY(0) rotate(0deg); opacity: 0.85; }
-          }
-          @keyframes cryptoFloat3 {
-            0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-            50%  { transform: translateY(-14px) rotate(12deg); opacity: 0.95; }
-            100% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-          }
-          @keyframes cryptoFloat4 {
-            0%   { transform: translateY(0) rotate(0deg); opacity: 0.75; }
-            50%  { transform: translateY(-20px) rotate(-10deg); opacity: 0.95; }
-            100% { transform: translateY(0) rotate(0deg); opacity: 0.75; }
-          }
-          @keyframes moonFloat {
-            0%   { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-          }
-          .hash-rain { animation: hashDrift 8s linear infinite; }
-          .hash-rain2 { animation: hashDrift2 10s linear infinite 2s; }
-          .hash-rain3 { animation: hashDrift3 7s linear infinite 4s; }
-          @keyframes hashDrift {
-            0%   { transform: translateY(-20px); opacity: 0; }
-            10%  { opacity: 0.7; }
-            90%  { opacity: 0.5; }
-            100% { transform: translateY(60px); opacity: 0; }
-          }
-          @keyframes hashDrift2 {
-            0%   { transform: translateY(-20px); opacity: 0; }
-            10%  { opacity: 0.6; }
-            90%  { opacity: 0.4; }
-            100% { transform: translateY(50px); opacity: 0; }
-          }
-          @keyframes hashDrift3 {
-            0%   { transform: translateY(-20px); opacity: 0; }
-            10%  { opacity: 0.5; }
-            90%  { opacity: 0.3; }
-            100% { transform: translateY(55px); opacity: 0; }
-          }
-          .chart-bar { animation: chartPulse 1.8s ease-in-out infinite alternate; }
-          .chart-bar2 { animation: chartPulse 1.8s ease-in-out infinite alternate 0.3s; }
-          .chart-bar3 { animation: chartPulse 1.8s ease-in-out infinite alternate 0.6s; }
-          @keyframes chartPulse {
-            0%   { opacity: 0.7; }
-            100% { opacity: 1; }
-          }
-          .hodl-text { animation: hodlPulse 2s ease-in-out infinite alternate; }
-          @keyframes hodlPulse {
-            0%   { opacity: 0.8; filter: drop-shadow(0 0 4px #aaff00); }
-            100% { opacity: 1; filter: drop-shadow(0 0 12px #aaff00) drop-shadow(0 0 20px #aaff0066); }
-          }
+          /* smoke */
+          .smoke1 { animation: sp1 2.3s ease-in-out infinite; }
+          .smoke2 { animation: sp2 2.3s ease-in-out infinite 0.75s; }
+          .smoke3 { animation: sp3 2.3s ease-in-out infinite 1.5s; }
+          .smoke4 { animation: sp4 2.9s ease-in-out infinite 0.35s; }
+          .smoke5 { animation: sp5 3.3s ease-in-out infinite 1.15s; }
+          @keyframes sp1 { 0%{transform:translateY(0) scale(1);opacity:.9} 60%{transform:translateY(-32px) translateX(5px) scale(1.9);opacity:.5} 100%{transform:translateY(-62px) translateX(9px) scale(2.8);opacity:0} }
+          @keyframes sp2 { 0%{transform:translateY(0) scale(.85);opacity:.8} 60%{transform:translateY(-30px) translateX(-4px) scale(1.7);opacity:.4} 100%{transform:translateY(-58px) translateX(-8px) scale(2.5);opacity:0} }
+          @keyframes sp3 { 0%{transform:translateY(0) scale(.75);opacity:.75} 60%{transform:translateY(-28px) translateX(6px) scale(1.6);opacity:.35} 100%{transform:translateY(-54px) translateX(11px) scale(2.3);opacity:0} }
+          @keyframes sp4 { 0%{transform:translateY(0) scale(1);opacity:.65} 60%{transform:translateY(-36px) translateX(-5px) scale(2.1);opacity:.28} 100%{transform:translateY(-66px) translateX(-9px) scale(3);opacity:0} }
+          @keyframes sp5 { 0%{transform:translateY(0) scale(1.1);opacity:.55} 60%{transform:translateY(-40px) translateX(5px) scale(2.3);opacity:.2} 100%{transform:translateY(-74px) translateX(9px) scale(3.2);opacity:0} }
+          /* boombox */
+          .boom { animation: boomPulse .55s ease-in-out infinite alternate; transform-origin: 220px 720px; }
+          @keyframes boomPulse { 0%{transform:scale(0.97)} 100%{transform:scale(1.03)} }
+          /* tv */
+          .tv-s { animation: tvFlicker 2.1s steps(1) infinite; }
+          @keyframes tvFlicker { 0%{opacity:.88} 15%{opacity:1} 30%{opacity:.82} 45%{opacity:.96} 60%{opacity:.78} 75%{opacity:1} 90%{opacity:.9} 100%{opacity:.85} }
+          /* coins */
+          .btc { animation: cf1 6s ease-in-out infinite; }
+          .eth { animation: cf2 7.2s ease-in-out infinite 1.1s; }
+          .sol { animation: cf3 5.8s ease-in-out infinite 2.2s; }
+          .moon { animation: mf 4.5s ease-in-out infinite alternate; }
+          @keyframes cf1 { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-20px) rotate(9deg)} }
+          @keyframes cf2 { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-24px) rotate(-7deg)} }
+          @keyframes cf3 { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-16px) rotate(13deg)} }
+          @keyframes mf  { 0%{transform:translateY(0)} 100%{transform:translateY(-12px)} }
+          /* charts */
+          .cb  { animation: cp 1.9s ease-in-out infinite alternate; }
+          .cb2 { animation: cp 1.9s ease-in-out infinite alternate .35s; }
+          .cb3 { animation: cp 1.9s ease-in-out infinite alternate .7s; }
+          @keyframes cp { 0%{opacity:.65} 100%{opacity:1} }
+          /* hodl */
+          .hodl { animation: hp 2.2s ease-in-out infinite alternate; }
+          @keyframes hp { 0%{opacity:.75;filter:drop-shadow(0 0 4px #aaff00)} 100%{opacity:1;filter:drop-shadow(0 0 14px #aaff00) drop-shadow(0 0 24px #aaff0055)} }
+          /* hash rain */
+          .hr1 { animation: hd1 8s linear infinite; }
+          .hr2 { animation: hd2 10s linear infinite 2.5s; }
+          .hr3 { animation: hd3 7s linear infinite 4.5s; }
+          @keyframes hd1 { 0%{transform:translateY(-20px);opacity:0} 10%{opacity:.6} 90%{opacity:.4} 100%{transform:translateY(60px);opacity:0} }
+          @keyframes hd2 { 0%{transform:translateY(-20px);opacity:0} 10%{opacity:.5} 90%{opacity:.3} 100%{transform:translateY(50px);opacity:0} }
+          @keyframes hd3 { 0%{transform:translateY(-20px);opacity:0} 10%{opacity:.4} 90%{opacity:.2} 100%{transform:translateY(55px);opacity:0} }
+          /* antenna */
+          .ant { animation: ab 1.5s ease-in-out infinite alternate; }
+          @keyframes ab { 0%{opacity:.5} 100%{opacity:1;filter:drop-shadow(0 0 7px #cc00ff)} }
+          /* spot pattern neon */
+          .spot { animation: spotGlow 3s ease-in-out infinite alternate; }
+          @keyframes spotGlow { 0%{opacity:.45} 100%{opacity:.75} }
         `}</style>
 
-        {/* ===== CRYPTO HASH RAIN (background layer) ===== */}
+        {/* === HASH RAIN === */}
         <g
-          className="hash-rain"
+          className="hr1"
           style={{ fontSize: "7px", fontFamily: "monospace", fill: "#aaff00" }}
         >
-          <text x="20" y="80">
+          <text x="310" y="130">
             0x4f2a9c
           </text>
-          <text x="20" y="92">
+          <text x="310" y="143">
             b7e3d1f
           </text>
-          <text x="20" y="104">
-            8a0c5e2
-          </text>
         </g>
         <g
-          className="hash-rain2"
+          className="hr2"
           style={{ fontSize: "7px", fontFamily: "monospace", fill: "#aaff00" }}
         >
-          <text x="50" y="120">
+          <text x="340" y="200">
             3f9b7c1
           </text>
-          <text x="50" y="132">
+          <text x="340" y="213">
             a4d8e06
-          </text>
-          <text x="50" y="144">
-            1c5f2b9
           </text>
         </g>
         <g
-          className="hash-rain3"
-          style={{ fontSize: "6px", fontFamily: "monospace", fill: "#00ffcc" }}
+          className="hr3"
+          style={{ fontSize: "6px", fontFamily: "monospace", fill: "#cc00ff" }}
         >
-          <text x="30" y="160">
+          <text x="320" y="270">
             0xDEAD
           </text>
-          <text x="30" y="171">
+          <text x="320" y="281">
             BEEF42
           </text>
         </g>
 
-        {/* ===== FLOATING CRYPTO COINS ===== */}
-        {/* Bitcoin */}
-        <g className="btc-float" transform="translate(30, 50)">
+        {/* === FLOATING COINS === */}
+        <g className="btc" transform="translate(368,55)">
           <circle
             cx="0"
             cy="0"
-            r="18"
+            r="17"
             fill="#1a1200"
             stroke="#f7931a"
             strokeWidth="2.5"
@@ -201,7 +171,7 @@ export default function CyborgGiraffeScene() {
             y="6"
             textAnchor="middle"
             style={{
-              fontSize: "16px",
+              fontSize: "15px",
               fill: "#f7931a",
               fontWeight: "bold",
               fontFamily: "sans-serif",
@@ -210,22 +180,21 @@ export default function CyborgGiraffeScene() {
             ₿
           </text>
         </g>
-        {/* Ethereum */}
-        <g className="eth-float" transform="translate(340, 80)">
+        <g className="eth" transform="translate(395,130)">
           <circle
             cx="0"
             cy="0"
-            r="16"
+            r="14"
             fill="#0a0a1f"
             stroke="#627eea"
             strokeWidth="2.5"
           />
           <text
             x="0"
-            y="6"
+            y="5"
             textAnchor="middle"
             style={{
-              fontSize: "14px",
+              fontSize: "12px",
               fill: "#627eea",
               fontWeight: "bold",
               fontFamily: "sans-serif",
@@ -234,46 +203,21 @@ export default function CyborgGiraffeScene() {
             Ξ
           </text>
         </g>
-        {/* Doge */}
-        <g className="doge-float" transform="translate(15, 200)">
+        <g className="sol" transform="translate(378,215)">
           <circle
             cx="0"
             cy="0"
-            r="13"
-            fill="#1a1200"
-            stroke="#c2a633"
-            strokeWidth="2"
-          />
-          <text
-            x="0"
-            y="5"
-            textAnchor="middle"
-            style={{
-              fontSize: "11px",
-              fill: "#c2a633",
-              fontWeight: "bold",
-              fontFamily: "sans-serif",
-            }}
-          >
-            Ð
-          </text>
-        </g>
-        {/* SOL */}
-        <g className="sol-float" transform="translate(355, 180)">
-          <circle
-            cx="0"
-            cy="0"
-            r="13"
+            r="12"
             fill="#0f0a1a"
             stroke="#9945ff"
             strokeWidth="2"
           />
           <text
             x="0"
-            y="5"
+            y="4"
             textAnchor="middle"
             style={{
-              fontSize: "9px",
+              fontSize: "8px",
               fill: "#9945ff",
               fontWeight: "bold",
               fontFamily: "sans-serif",
@@ -282,1070 +226,11 @@ export default function CyborgGiraffeScene() {
             SOL
           </text>
         </g>
-
-        {/* ===== CRYPTO MONITOR (top center, above giraffe) ===== */}
-        <g transform="translate(110, 30)">
-          {/* Monitor body */}
-          <rect
-            x="0"
-            y="0"
-            width="170"
-            height="110"
-            rx="8"
-            fill="#111"
-            stroke="#c0c0c0"
-            strokeWidth="2"
-          />
-          {/* Screen */}
-          <rect x="8" y="8" width="154" height="80" rx="4" fill="#060d06" />
-          {/* Screen label */}
-          <text
-            x="10"
-            y="20"
-            style={{
-              fontSize: "7px",
-              fill: "#aaff00",
-              fontFamily: "monospace",
-            }}
-          >
-            BTC/USD ▲ +6.9%
-          </text>
-          {/* Candlestick chart */}
-          {/* Green candles */}
-          <rect
-            className="chart-bar"
-            x="14"
-            y="45"
-            width="6"
-            height="24"
-            rx="1"
-            fill="#aaff00"
-          />
-          <line
-            x1="17"
-            y1="40"
-            x2="17"
-            y2="45"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="17"
-            y1="69"
-            x2="17"
-            y2="74"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-
-          <rect
-            className="chart-bar2"
-            x="24"
-            y="38"
-            width="6"
-            height="30"
-            rx="1"
-            fill="#aaff00"
-          />
-          <line
-            x1="27"
-            y1="33"
-            x2="27"
-            y2="38"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="27"
-            y1="68"
-            x2="27"
-            y2="73"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-
-          {/* Red candle dip */}
-          <rect x="34" y="50" width="6" height="18" rx="1" fill="#ff4444" />
-          <line
-            x1="37"
-            y1="46"
-            x2="37"
-            y2="50"
-            stroke="#ff4444"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="37"
-            y1="68"
-            x2="37"
-            y2="72"
-            stroke="#ff4444"
-            strokeWidth="1.5"
-          />
-
-          <rect
-            className="chart-bar3"
-            x="44"
-            y="32"
-            width="6"
-            height="34"
-            rx="1"
-            fill="#aaff00"
-          />
-          <line
-            x1="47"
-            y1="27"
-            x2="47"
-            y2="32"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="47"
-            y1="66"
-            x2="47"
-            y2="71"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-
-          <rect
-            className="chart-bar"
-            x="54"
-            y="28"
-            width="6"
-            height="38"
-            rx="1"
-            fill="#aaff00"
-          />
-          <line
-            x1="57"
-            y1="23"
-            x2="57"
-            y2="28"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="57"
-            y1="66"
-            x2="57"
-            y2="71"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-
-          {/* Red dip */}
-          <rect x="64" y="44" width="6" height="20" rx="1" fill="#ff4444" />
-          <line
-            x1="67"
-            y1="40"
-            x2="67"
-            y2="44"
-            stroke="#ff4444"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="67"
-            y1="64"
-            x2="67"
-            y2="68"
-            stroke="#ff4444"
-            strokeWidth="1.5"
-          />
-
-          <rect
-            className="chart-bar2"
-            x="74"
-            y="22"
-            width="6"
-            height="42"
-            rx="1"
-            fill="#aaff00"
-          />
-          <line
-            x1="77"
-            y1="17"
-            x2="77"
-            y2="22"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="77"
-            y1="64"
-            x2="77"
-            y2="69"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-
-          <rect
-            className="chart-bar3"
-            x="84"
-            y="18"
-            width="6"
-            height="46"
-            rx="1"
-            fill="#aaff00"
-          />
-          <line
-            x1="87"
-            y1="13"
-            x2="87"
-            y2="18"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="87"
-            y1="64"
-            x2="87"
-            y2="69"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-          />
-
-          {/* Trending line */}
-          <polyline
-            points="17,58 27,52 37,60 47,46 57,40 67,50 77,36 87,30 120,24 140,18"
-            stroke="#00ffcc"
-            strokeWidth="1.5"
-            fill="none"
-            strokeDasharray="3 2"
-          />
-
-          {/* Bottom labels */}
-          <text
-            x="10"
-            y="95"
-            style={{ fontSize: "6px", fill: "#555", fontFamily: "monospace" }}
-          >
-            1D 1W 1M 1Y
-          </text>
-          <text
-            x="110"
-            y="95"
-            style={{
-              fontSize: "6px",
-              fill: "#aaff00",
-              fontFamily: "monospace",
-            }}
-          >
-            $69,420
-          </text>
-
-          {/* Monitor stand */}
-          <rect x="75" y="110" width="20" height="10" rx="2" fill="#888" />
-          <rect x="60" y="118" width="50" height="5" rx="2" fill="#666" />
-        </g>
-
-        {/* ===== HODL / TO THE MOON text ===== */}
-        <g className="hodl-text">
-          <text
-            x="28"
-            y="290"
-            style={{
-              fontSize: "13px",
-              fill: "#aaff00",
-              fontWeight: "bold",
-              fontFamily: "monospace",
-              letterSpacing: "2px",
-            }}
-          >
-            HODL 💎🙌
-          </text>
-          <text
-            x="22"
-            y="310"
-            style={{
-              fontSize: "10px",
-              fill: "#00ffcc",
-              fontFamily: "monospace",
-            }}
-          >
-            TO THE MOON 🌙
-          </text>
-        </g>
-
-        {/* ===== TV SET (left side) ===== */}
-        <g transform="translate(10, 440)">
-          {/* TV body */}
-          <rect
-            x="10"
-            y="0"
-            width="110"
-            height="80"
-            rx="8"
-            fill="#1a1a1a"
-            stroke="#c0c0c0"
-            strokeWidth="2.5"
-          />
-          {/* TV screen */}
-          <rect
-            x="18"
-            y="8"
-            width="94"
-            height="58"
-            rx="4"
-            fill="#0a0a0a"
-            className="tv-screen"
-          />
-          {/* Screen glow content */}
-          <rect
-            x="18"
-            y="8"
-            width="94"
-            height="58"
-            rx="4"
-            fill="url(#tvGlow)"
-            className="tv-screen"
-            opacity="0.9"
-          />
-          {/* Crypto price on TV */}
-          <text
-            x="22"
-            y="26"
-            className="tv-screen"
-            style={{
-              fontSize: "7px",
-              fill: "#aaff00",
-              fontFamily: "monospace",
-            }}
-          >
-            ₿ $69,420 ▲
-          </text>
-          <text
-            x="22"
-            y="38"
-            className="tv-screen"
-            style={{
-              fontSize: "7px",
-              fill: "#00ffcc",
-              fontFamily: "monospace",
-            }}
-          >
-            Ξ $4,200 ▲
-          </text>
-          <text
-            x="22"
-            y="50"
-            className="tv-screen"
-            style={{
-              fontSize: "6px",
-              fill: "#f7931a",
-              fontFamily: "monospace",
-            }}
-          >
-            DOGE 🚀 +420%
-          </text>
-          {/* TV legs */}
-          <rect x="30" y="80" width="10" height="18" rx="2" fill="#888" />
-          <rect x="90" y="80" width="10" height="18" rx="2" fill="#888" />
-          {/* Antenna left */}
-          <line
-            x1="45"
-            y1="0"
-            x2="28"
-            y2="-28"
-            stroke="#c0c0c0"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <circle cx="28" cy="-30" r="3" fill="#aaff00" />
-          {/* Antenna right */}
-          <line
-            x1="75"
-            y1="0"
-            x2="95"
-            y2="-30"
-            stroke="#c0c0c0"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <circle cx="95" cy="-32" r="3" fill="#aaff00" />
-          {/* Channel knob */}
-          <circle
-            cx="112"
-            cy="25"
-            r="5"
-            fill="#888"
-            stroke="#c0c0c0"
-            strokeWidth="1"
-          />
-          <circle
-            cx="112"
-            cy="45"
-            r="5"
-            fill="#666"
-            stroke="#c0c0c0"
-            strokeWidth="1"
-          />
-        </g>
-
-        {/* ===== BOOMBOX (center-right bottom) ===== */}
-        <g className="boombox-speaker" transform="translate(150, 560)">
-          <rect
-            x="0"
-            y="0"
-            width="160"
-            height="70"
-            rx="10"
-            fill="#111"
-            stroke="#c0c0c0"
-            strokeWidth="2"
-          />
-          {/* Left speaker */}
-          <circle
-            cx="28"
-            cy="35"
-            r="20"
-            fill="#0a0a0a"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-          />
-          <circle
-            cx="28"
-            cy="35"
-            r="13"
-            fill="#111"
-            stroke="#888"
-            strokeWidth="1"
-          />
-          <circle
-            cx="28"
-            cy="35"
-            r="6"
-            fill="#1a1a1a"
-            stroke="#aaff00"
-            strokeWidth="1"
-          />
-          <circle cx="28" cy="35" r="2.5" fill="#aaff00" />
-          {/* Right speaker */}
-          <circle
-            cx="132"
-            cy="35"
-            r="20"
-            fill="#0a0a0a"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-          />
-          <circle
-            cx="132"
-            cy="35"
-            r="13"
-            fill="#111"
-            stroke="#888"
-            strokeWidth="1"
-          />
-          <circle
-            cx="132"
-            cy="35"
-            r="6"
-            fill="#1a1a1a"
-            stroke="#aaff00"
-            strokeWidth="1"
-          />
-          <circle cx="132" cy="35" r="2.5" fill="#aaff00" />
-          {/* Center cassette/display area */}
-          <rect
-            x="55"
-            y="8"
-            width="50"
-            height="30"
-            rx="4"
-            fill="#0a0a0a"
-            stroke="#888"
-            strokeWidth="1"
-          />
-          {/* Cassette reels */}
-          <circle
-            cx="68"
-            cy="23"
-            r="7"
-            fill="#1a1a1a"
-            stroke="#c0c0c0"
-            strokeWidth="1"
-          />
-          <circle cx="68" cy="23" r="3" fill="#aaff00" />
-          <circle
-            cx="92"
-            cy="23"
-            r="7"
-            fill="#1a1a1a"
-            stroke="#c0c0c0"
-            strokeWidth="1"
-          />
-          <circle cx="92" cy="23" r="3" fill="#aaff00" />
-          {/* Tape slot */}
-          <rect x="58" y="32" width="44" height="3" rx="1" fill="#222" />
-          {/* Buttons */}
-          <rect
-            x="58"
-            y="42"
-            width="8"
-            height="6"
-            rx="1"
-            fill="#333"
-            stroke="#555"
-            strokeWidth="0.5"
-          />
-          <rect
-            x="68"
-            y="42"
-            width="8"
-            height="6"
-            rx="1"
-            fill="#333"
-            stroke="#555"
-            strokeWidth="0.5"
-          />
-          <rect
-            x="78"
-            y="42"
-            width="8"
-            height="6"
-            rx="1"
-            fill="#aaff00"
-            opacity="0.8"
-          />
-          <rect
-            x="88"
-            y="42"
-            width="8"
-            height="6"
-            rx="1"
-            fill="#333"
-            stroke="#555"
-            strokeWidth="0.5"
-          />
-        </g>
-
-        {/* ===== CYBORG GIRAFFE ===== */}
-        <g className="giraffe-body">
-          {/* Back legs */}
-          <rect x="163" y="538" width="16" height="65" rx="7" fill="#b8903c" />
-          <rect
-            x="161"
-            y="570"
-            width="20"
-            height="33"
-            rx="4"
-            fill="#2a2a2a"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="165"
-            y1="580"
-            x2="177"
-            y2="580"
-            stroke="#c0c0c0"
-            strokeWidth="1"
-          />
-          <line
-            x1="165"
-            y1="586"
-            x2="177"
-            y2="586"
-            stroke="#c0c0c0"
-            strokeWidth="1"
-          />
-          <ellipse
-            cx="171"
-            cy="603"
-            rx="12"
-            ry="5"
-            fill="#1a1a1a"
-            stroke="#888"
-            strokeWidth="1"
-          />
-
-          <rect x="250" y="538" width="16" height="65" rx="7" fill="#b8903c" />
-          <circle
-            cx="258"
-            cy="570"
-            r="9"
-            fill="#333"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-          />
-          <circle cx="258" cy="570" r="4" fill="#aaff00" opacity="0.8" />
-          <ellipse
-            cx="258"
-            cy="603"
-            rx="12"
-            ry="5"
-            fill="#1a1a1a"
-            stroke="#888"
-            strokeWidth="1"
-          />
-
-          {/* Body */}
-          <ellipse cx="213" cy="490" rx="60" ry="55" fill="#d4a855" />
-          {/* Body spots */}
-          <ellipse
-            cx="195"
-            cy="475"
-            rx="12"
-            ry="16"
-            fill="#7a5c28"
-            opacity="0.5"
-            transform="rotate(-15 195 475)"
-          />
-          <ellipse
-            cx="225"
-            cy="510"
-            rx="10"
-            ry="14"
-            fill="#7a5c28"
-            opacity="0.5"
-            transform="rotate(10 225 510)"
-          />
-          <ellipse
-            cx="240"
-            cy="480"
-            rx="8"
-            ry="11"
-            fill="#7a5c28"
-            opacity="0.5"
-            transform="rotate(-5 240 480)"
-          />
-          <ellipse
-            cx="200"
-            cy="508"
-            rx="9"
-            ry="12"
-            fill="#7a5c28"
-            opacity="0.4"
-          />
-          {/* Cybernetic chest plate */}
-          <rect
-            x="185"
-            y="465"
-            width="55"
-            height="40"
-            rx="8"
-            fill="#1a1a1a"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-            opacity="0.85"
-          />
-          <line
-            x1="192"
-            y1="478"
-            x2="232"
-            y2="478"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-            opacity="0.8"
-          />
-          <line
-            x1="192"
-            y1="485"
-            x2="232"
-            y2="485"
-            stroke="#aaff00"
-            strokeWidth="1"
-            opacity="0.5"
-          />
-          {/* Crypto symbol on chest */}
-          <text
-            x="207"
-            y="500"
-            style={{
-              fontSize: "10px",
-              fill: "#aaff00",
-              fontFamily: "monospace",
-              fontWeight: "bold",
-            }}
-          >
-            ₿
-          </text>
-          <circle
-            cx="215"
-            cy="478"
-            r="4"
-            fill="none"
-            stroke="#aaff00"
-            strokeWidth="1"
-            opacity="0.9"
-          />
-
-          {/* Front left leg */}
-          <rect x="193" y="538" width="16" height="65" rx="7" fill="#d4a855" />
-          <rect
-            x="191"
-            y="570"
-            width="20"
-            height="33"
-            rx="4"
-            fill="#2a2a2a"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-          />
-          <line
-            x1="195"
-            y1="580"
-            x2="207"
-            y2="580"
-            stroke="#c0c0c0"
-            strokeWidth="1"
-          />
-          <line
-            x1="195"
-            y1="586"
-            x2="207"
-            y2="586"
-            stroke="#c0c0c0"
-            strokeWidth="1"
-          />
-          <ellipse
-            cx="201"
-            cy="603"
-            rx="12"
-            ry="5"
-            fill="#1a1a1a"
-            stroke="#888"
-            strokeWidth="1"
-          />
-
-          {/* Front right leg */}
-          <rect x="222" y="538" width="16" height="65" rx="7" fill="#c49a45" />
-          <circle
-            cx="230"
-            cy="570"
-            r="9"
-            fill="#333"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-          />
-          <circle cx="230" cy="570" r="4" fill="#aaff00" opacity="0.8" />
-          <ellipse
-            cx="230"
-            cy="603"
-            rx="12"
-            ry="5"
-            fill="#1a1a1a"
-            stroke="#888"
-            strokeWidth="1"
-          />
-
-          {/* Neck */}
-          <path
-            d="M 205 420 Q 208 370 220 310 Q 228 285 235 270"
-            stroke="#d4a855"
-            strokeWidth="32"
-            fill="none"
-            strokeLinecap="round"
-          />
-          {/* Neck spots */}
-          <ellipse
-            cx="210"
-            cy="400"
-            rx="8"
-            ry="11"
-            fill="#7a5c28"
-            opacity="0.6"
-            transform="rotate(-10 210 400)"
-          />
-          <ellipse
-            cx="216"
-            cy="360"
-            rx="7"
-            ry="10"
-            fill="#7a5c28"
-            opacity="0.6"
-            transform="rotate(-15 216 360)"
-          />
-          <ellipse
-            cx="222"
-            cy="320"
-            rx="6"
-            ry="8"
-            fill="#7a5c28"
-            opacity="0.6"
-            transform="rotate(-20 222 320)"
-          />
-          {/* Cybernetic neck brace */}
-          <rect
-            x="204"
-            y="340"
-            width="30"
-            height="18"
-            rx="4"
-            fill="#1a1a1a"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-            opacity="0.9"
-          />
-          <line
-            x1="208"
-            y1="349"
-            x2="230"
-            y2="349"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-            opacity="0.8"
-          />
-
-          {/* Cybernetic arm (right, holding joint) */}
-          <path
-            d="M 240 460 Q 260 430 268 400 Q 274 375 260 355 Q 256 345 258 330"
-            stroke="#2a2a2a"
-            strokeWidth="12"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M 240 460 Q 260 430 268 400 Q 274 375 260 355 Q 256 345 258 330"
-            stroke="#c0c0c0"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray="6 4"
-          />
-          {/* Arm joint sphere */}
-          <circle
-            cx="268"
-            cy="400"
-            r="8"
-            fill="#333"
-            stroke="#c0c0c0"
-            strokeWidth="1.5"
-          />
-          <circle cx="268" cy="400" r="4" fill="#aaff00" opacity="0.7" />
-          {/* Mechanical hand/claw */}
-          <path
-            d="M 256 325 L 260 315 L 256 310"
-            stroke="#c0c0c0"
-            strokeWidth="3"
-            fill="none"
-            strokeLinecap="round"
-          />
-          <path
-            d="M 260 325 L 265 314 L 262 309"
-            stroke="#c0c0c0"
-            strokeWidth="3"
-            fill="none"
-            strokeLinecap="round"
-          />
-          <path
-            d="M 264 327 L 270 316 L 268 311"
-            stroke="#c0c0c0"
-            strokeWidth="3"
-            fill="none"
-            strokeLinecap="round"
-          />
-
-          {/* Joint (smoking) — bigger and more visible */}
-          <rect
-            x="259"
-            y="296"
-            width="28"
-            height="6"
-            rx="3"
-            fill="#f5e6c0"
-            transform="rotate(-25 259 296)"
-          />
-          <rect
-            x="259"
-            y="296"
-            width="9"
-            height="6"
-            rx="2.5"
-            fill="#a0522d"
-            transform="rotate(-25 259 296)"
-          />
-          {/* Ember glow — enhanced */}
-          <circle cx="258" cy="295" r="4" fill="#ff6600" opacity="0.95" />
-          <circle cx="258" cy="295" r="7" fill="#ff4400" opacity="0.4" />
-          <circle cx="258" cy="295" r="10" fill="#ff2200" opacity="0.15" />
-
-          {/* Smoke puffs — more and bigger */}
-          <circle
-            className="smoke1"
-            cx="258"
-            cy="293"
-            r="7"
-            fill="#bbbbbb"
-            opacity="0.9"
-          />
-          <circle
-            className="smoke2"
-            cx="253"
-            cy="278"
-            r="9"
-            fill="#aaaaaa"
-            opacity="0.8"
-          />
-          <circle
-            className="smoke3"
-            cx="248"
-            cy="262"
-            r="11"
-            fill="#999999"
-            opacity="0.7"
-          />
-          <circle
-            className="smoke4"
-            cx="244"
-            cy="248"
-            r="13"
-            fill="#888888"
-            opacity="0.6"
-          />
-          <circle
-            className="smoke5"
-            cx="240"
-            cy="232"
-            r="15"
-            fill="#777777"
-            opacity="0.5"
-          />
-
-          {/* HEAD */}
-          <ellipse cx="240" cy="255" rx="28" ry="22" fill="#d4a855" />
-          {/* Head spots */}
-          <ellipse
-            cx="230"
-            cy="248"
-            rx="7"
-            ry="5"
-            fill="#7a5c28"
-            opacity="0.6"
-          />
-          <ellipse
-            cx="250"
-            cy="258"
-            rx="6"
-            ry="4"
-            fill="#7a5c28"
-            opacity="0.6"
-          />
-
-          {/* Ossicones (horns) */}
-          <line
-            x1="230"
-            y1="235"
-            x2="224"
-            y2="210"
-            stroke="#c49a45"
-            strokeWidth="6"
-            strokeLinecap="round"
-          />
-          <circle cx="223" cy="207" r="5" fill="#c49a45" />
-          <line
-            x1="245"
-            y1="234"
-            x2="245"
-            y2="208"
-            stroke="#c49a45"
-            strokeWidth="6"
-            strokeLinecap="round"
-          />
-          <circle cx="245" cy="205" r="5" fill="#c49a45" />
-
-          {/* ROBOTIC EYE (left - cyborg side) */}
-          <circle
-            cx="225"
-            cy="258"
-            r="10"
-            fill="#1a1a1a"
-            stroke="#c0c0c0"
-            strokeWidth="2"
-          />
-          <circle cx="225" cy="258" r="6" fill="#0a0a0a" />
-          <circle
-            cx="225"
-            cy="258"
-            r="4"
-            fill="none"
-            stroke="#aaff00"
-            strokeWidth="1.5"
-            opacity="0.9"
-          />
-          <circle
-            className="robotic-eye-glow"
-            cx="225"
-            cy="258"
-            r="4"
-            fill="#aaff00"
-            opacity="0.6"
-          />
-          <line
-            x1="218"
-            y1="258"
-            x2="232"
-            y2="258"
-            stroke="#aaff00"
-            strokeWidth="1"
-            opacity="0.7"
-          />
-
-          {/* Normal eye (right) */}
-          <ellipse cx="252" cy="255" rx="7" ry="6" fill="#1a1a1a" />
-          <circle cx="253" cy="254" r="3" fill="#3a2800" />
-          <circle cx="254" cy="253" r="1.5" fill="#fff" opacity="0.7" />
-
-          {/* Nostril */}
-          <ellipse cx="262" cy="268" rx="4" ry="2.5" fill="#b08030" />
-
-          {/* Mouth (smiling) */}
-          <path
-            d="M 255 272 Q 262 278 268 273"
-            stroke="#8a6020"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-          />
-
-          {/* Cybernetic skull plate */}
-          <path
-            d="M 218 240 Q 226 228 238 228 Q 248 228 254 235"
-            stroke="#c0c0c0"
-            strokeWidth="2"
-            fill="none"
-            opacity="0.8"
-          />
-          <circle
-            cx="222"
-            cy="242"
-            r="2.5"
-            fill="#888"
-            stroke="#c0c0c0"
-            strokeWidth="0.8"
-          />
-          <circle
-            cx="250"
-            cy="238"
-            r="2.5"
-            fill="#888"
-            stroke="#c0c0c0"
-            strokeWidth="0.8"
-          />
-          <line
-            x1="224"
-            y1="238"
-            x2="248"
-            y2="234"
-            stroke="#aaff00"
-            strokeWidth="0.8"
-            opacity="0.6"
-          />
-
-          {/* Ear */}
-          <ellipse cx="265" cy="252" rx="7" ry="9" fill="#c49a45" />
-          <ellipse cx="265" cy="252" rx="4" ry="5" fill="#e8b870" />
-        </g>
-
-        {/* ===== TO THE MOON floating symbol ===== */}
-        <g className="moon-float" transform="translate(340, 40)">
+        <g className="moon" transform="translate(358,38)">
           <circle
             cx="0"
             cy="0"
-            r="20"
+            r="17"
             fill="#0a0a1a"
             stroke="#aaff00"
             strokeWidth="1.5"
@@ -1353,15 +238,15 @@ export default function CyborgGiraffeScene() {
           />
           <text
             x="0"
-            y="-5"
+            y="-4"
             textAnchor="middle"
-            style={{ fontSize: "14px", fill: "#aaff00" }}
+            style={{ fontSize: "12px", fill: "#aaff00" }}
           >
             🌙
           </text>
           <text
             x="0"
-            y="10"
+            y="9"
             textAnchor="middle"
             style={{
               fontSize: "5px",
@@ -1374,14 +259,1026 @@ export default function CyborgGiraffeScene() {
           </text>
         </g>
 
-        {/* Gradient defs */}
-        <defs>
-          <radialGradient id="tvGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#aaff00" stopOpacity="0.3" />
-            <stop offset="40%" stopColor="#00ffcc" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#003300" stopOpacity="0.05" />
-          </radialGradient>
-        </defs>
+        {/* === CRYPTO MONITOR (top center) === */}
+        <g transform="translate(120,18)">
+          <rect
+            x="0"
+            y="0"
+            width="165"
+            height="108"
+            rx="8"
+            fill="#111"
+            stroke="#cc00ff"
+            strokeWidth="2"
+            filter="url(#softGlow)"
+          />
+          <rect x="8" y="8" width="149" height="78" rx="4" fill="#060d06" />
+          <text
+            x="10"
+            y="20"
+            style={{
+              fontSize: "7px",
+              fill: "#aaff00",
+              fontFamily: "monospace",
+            }}
+          >
+            BTC/USD ▲ +6.9%
+          </text>
+          <rect
+            className="cb"
+            x="14"
+            y="44"
+            width="6"
+            height="24"
+            rx="1"
+            fill="#aaff00"
+          />
+          <rect
+            className="cb2"
+            x="24"
+            y="37"
+            width="6"
+            height="30"
+            rx="1"
+            fill="#aaff00"
+          />
+          <rect x="34" y="49" width="6" height="18" rx="1" fill="#ff4444" />
+          <rect
+            className="cb3"
+            x="44"
+            y="31"
+            width="6"
+            height="34"
+            rx="1"
+            fill="#aaff00"
+          />
+          <rect
+            className="cb"
+            x="54"
+            y="27"
+            width="6"
+            height="38"
+            rx="1"
+            fill="#aaff00"
+          />
+          <rect x="64" y="43" width="6" height="20" rx="1" fill="#ff4444" />
+          <rect
+            className="cb2"
+            x="74"
+            y="21"
+            width="6"
+            height="42"
+            rx="1"
+            fill="#aaff00"
+          />
+          <rect
+            className="cb3"
+            x="84"
+            y="17"
+            width="6"
+            height="46"
+            rx="1"
+            fill="#aaff00"
+          />
+          <polyline
+            points="17,57 27,51 37,59 47,45 57,39 67,49 77,35 87,29 115,23 138,17"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+            fill="none"
+            strokeDasharray="3 2"
+          />
+          <text
+            x="10"
+            y="93"
+            style={{ fontSize: "6px", fill: "#555", fontFamily: "monospace" }}
+          >
+            1D 1W 1M 1Y
+          </text>
+          <text
+            x="108"
+            y="93"
+            style={{
+              fontSize: "6px",
+              fill: "#aaff00",
+              fontFamily: "monospace",
+            }}
+          >
+            $69,420
+          </text>
+          <rect x="72" y="108" width="20" height="10" rx="2" fill="#888" />
+          <rect x="57" y="116" width="50" height="5" rx="2" fill="#666" />
+        </g>
+
+        {/* === HODL === */}
+        <g className="hodl">
+          <text
+            x="240"
+            y="305"
+            style={{
+              fontSize: "12px",
+              fill: "#aaff00",
+              fontWeight: "bold",
+              fontFamily: "monospace",
+              letterSpacing: "2px",
+            }}
+          >
+            HODL 💎🙌
+          </text>
+          <text
+            x="238"
+            y="321"
+            style={{
+              fontSize: "9px",
+              fill: "#cc00ff",
+              fontFamily: "monospace",
+            }}
+          >
+            TO THE MOON 🌙
+          </text>
+        </g>
+
+        {/* === TV SET (right mid) === */}
+        <g transform="translate(272,430)">
+          <rect
+            x="0"
+            y="0"
+            width="134"
+            height="92"
+            rx="8"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="2.5"
+            filter="url(#neonGlow)"
+          />
+          <rect
+            x="8"
+            y="8"
+            width="118"
+            height="66"
+            rx="4"
+            fill="#0a0a0a"
+            className="tv-s"
+          />
+          <rect
+            x="8"
+            y="8"
+            width="118"
+            height="66"
+            rx="4"
+            fill="url(#tvGlow)"
+            className="tv-s"
+            opacity="0.9"
+          />
+          <text
+            x="12"
+            y="26"
+            className="tv-s"
+            style={{
+              fontSize: "7px",
+              fill: "#aaff00",
+              fontFamily: "monospace",
+            }}
+          >
+            ₿ $69,420 ▲
+          </text>
+          <text
+            x="12"
+            y="39"
+            className="tv-s"
+            style={{
+              fontSize: "7px",
+              fill: "#00ffcc",
+              fontFamily: "monospace",
+            }}
+          >
+            Ξ $4,200 ▲
+          </text>
+          <text
+            x="12"
+            y="52"
+            className="tv-s"
+            style={{
+              fontSize: "6px",
+              fill: "#f7931a",
+              fontFamily: "monospace",
+            }}
+          >
+            DOGE 🚀 +420%
+          </text>
+          <text
+            x="12"
+            y="64"
+            className="tv-s"
+            style={{
+              fontSize: "6px",
+              fill: "#cc00ff",
+              fontFamily: "monospace",
+            }}
+          >
+            SOL ▲▲ PUMP
+          </text>
+          <rect x="26" y="92" width="10" height="16" rx="2" fill="#888" />
+          <rect x="98" y="92" width="10" height="16" rx="2" fill="#888" />
+          {/* Neon antennas */}
+          <line
+            x1="42"
+            y1="0"
+            x2="24"
+            y2="-26"
+            stroke="#cc00ff"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <circle className="ant" cx="23" cy="-29" r="4" fill="#cc00ff" />
+          <line
+            x1="92"
+            y1="0"
+            x2="112"
+            y2="-28"
+            stroke="#cc00ff"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <circle
+            className="ant"
+            cx="113"
+            cy="-31"
+            r="4"
+            fill="#00ffcc"
+            style={{ animationDelay: "0.7s" }}
+          />
+          <circle
+            cx="130"
+            cy="28"
+            r="5"
+            fill="#888"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+          <circle
+            cx="130"
+            cy="48"
+            r="5"
+            fill="#666"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+        </g>
+
+        {/* === BOOMBOX (center bottom) === */}
+        <g className="boom" transform="translate(130,666)">
+          <rect
+            x="0"
+            y="0"
+            width="185"
+            height="76"
+            rx="10"
+            fill="#110011"
+            stroke="#cc00ff"
+            strokeWidth="2.5"
+            filter="url(#neonGlow)"
+          />
+          {/* Left speaker */}
+          <circle
+            cx="30"
+            cy="38"
+            r="22"
+            fill="#0a0a0a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+          />
+          <circle
+            cx="30"
+            cy="38"
+            r="14"
+            fill="#111"
+            stroke="#9900cc"
+            strokeWidth="1"
+          />
+          <circle
+            cx="30"
+            cy="38"
+            r="7"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+          <circle cx="30" cy="38" r="3" fill="#cc00ff" />
+          {/* Right speaker */}
+          <circle
+            cx="155"
+            cy="38"
+            r="22"
+            fill="#0a0a0a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+          />
+          <circle
+            cx="155"
+            cy="38"
+            r="14"
+            fill="#111"
+            stroke="#9900cc"
+            strokeWidth="1"
+          />
+          <circle
+            cx="155"
+            cy="38"
+            r="7"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+          <circle cx="155" cy="38" r="3" fill="#cc00ff" />
+          {/* Cassette */}
+          <rect
+            x="62"
+            y="8"
+            width="61"
+            height="34"
+            rx="4"
+            fill="#0a0a0a"
+            stroke="#9900cc"
+            strokeWidth="1"
+          />
+          <circle
+            cx="77"
+            cy="25"
+            r="8"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+          <circle cx="77" cy="25" r="3.5" fill="#cc00ff" opacity="0.9" />
+          <circle
+            cx="108"
+            cy="25"
+            r="8"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+          <circle cx="108" cy="25" r="3.5" fill="#cc00ff" opacity="0.9" />
+          <rect x="65" y="34" width="55" height="3" rx="1" fill="#222" />
+          {/* Buttons */}
+          <rect
+            x="65"
+            y="46"
+            width="9"
+            height="7"
+            rx="1"
+            fill="#333"
+            stroke="#555"
+            strokeWidth="0.5"
+          />
+          <rect
+            x="76"
+            y="46"
+            width="9"
+            height="7"
+            rx="1"
+            fill="#333"
+            stroke="#555"
+            strokeWidth="0.5"
+          />
+          <rect
+            x="87"
+            y="46"
+            width="9"
+            height="7"
+            rx="1"
+            fill="#cc00ff"
+            opacity="0.85"
+          />
+          <rect
+            x="98"
+            y="46"
+            width="9"
+            height="7"
+            rx="1"
+            fill="#333"
+            stroke="#555"
+            strokeWidth="0.5"
+          />
+          {/* Neon base strip */}
+          <rect
+            x="10"
+            y="68"
+            width="165"
+            height="3"
+            rx="1.5"
+            fill="#cc00ff"
+            opacity="0.7"
+            filter="url(#neonGlow)"
+          />
+        </g>
+
+        {/* ===== NEON ALIEN GIRAFFE ===== */}
+        <g className="giraffe-body">
+          {/* Body aura */}
+          <ellipse
+            cx="160"
+            cy="520"
+            rx="80"
+            ry="200"
+            fill="url(#bodyAura)"
+            opacity="0.5"
+          />
+
+          {/* === LEGS === */}
+          {/* Back-left leg */}
+          <rect x="118" y="590" width="18" height="70" rx="8" fill="#b8903c" />
+          <rect
+            x="116"
+            y="622"
+            width="22"
+            height="38"
+            rx="5"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+          />
+          <line
+            x1="120"
+            y1="633"
+            x2="134"
+            y2="633"
+            stroke="#cc00ff"
+            strokeWidth="1"
+            opacity="0.7"
+          />
+          <line
+            x1="120"
+            y1="641"
+            x2="134"
+            y2="641"
+            stroke="#cc00ff"
+            strokeWidth="1"
+            opacity="0.5"
+          />
+          <ellipse
+            cx="127"
+            cy="660"
+            rx="13"
+            ry="5"
+            fill="#0a0a0a"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+
+          {/* Back-right leg */}
+          <rect x="196" y="590" width="18" height="70" rx="8" fill="#b8903c" />
+          <circle
+            cx="205"
+            cy="626"
+            r="10"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+          />
+          <circle cx="205" cy="626" r="5" fill="#cc00ff" opacity="0.7" />
+          <ellipse
+            cx="205"
+            cy="660"
+            rx="13"
+            ry="5"
+            fill="#0a0a0a"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+
+          {/* Body */}
+          <ellipse cx="165" cy="545" rx="62" ry="56" fill="#d4a855" />
+          {/* Neon alien spots on body */}
+          <ellipse
+            className="spot"
+            cx="148"
+            cy="530"
+            rx="13"
+            ry="17"
+            fill="#cc00ff"
+            opacity="0.5"
+            transform="rotate(-15 148 530)"
+          />
+          <ellipse
+            className="spot"
+            cx="178"
+            cy="562"
+            rx="11"
+            ry="15"
+            fill="#9900cc"
+            opacity="0.5"
+            transform="rotate(10 178 562)"
+          />
+          <ellipse
+            className="spot"
+            cx="192"
+            cy="535"
+            rx="9"
+            ry="12"
+            fill="#cc00ff"
+            opacity="0.45"
+            transform="rotate(-5 192 535)"
+          />
+          <ellipse
+            className="spot"
+            cx="152"
+            cy="560"
+            rx="10"
+            ry="13"
+            fill="#7700aa"
+            opacity="0.4"
+          />
+          {/* Chest panel */}
+          <rect
+            x="138"
+            y="523"
+            width="56"
+            height="42"
+            rx="8"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="2"
+            opacity="0.9"
+            className="neon-outline"
+          />
+          <line
+            x1="145"
+            y1="536"
+            x2="187"
+            y2="536"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+            opacity="0.8"
+          />
+          <line
+            x1="145"
+            y1="544"
+            x2="187"
+            y2="544"
+            stroke="#00ffcc"
+            strokeWidth="1"
+            opacity="0.5"
+          />
+          <text
+            x="163"
+            y="558"
+            style={{
+              fontSize: "11px",
+              fill: "#cc00ff",
+              fontFamily: "monospace",
+              fontWeight: "bold",
+            }}
+          >
+            👽
+          </text>
+
+          {/* Front-left leg */}
+          <rect x="145" y="590" width="18" height="70" rx="8" fill="#d4a855" />
+          <rect
+            x="143"
+            y="622"
+            width="22"
+            height="38"
+            rx="5"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+          />
+          <line
+            x1="147"
+            y1="633"
+            x2="161"
+            y2="633"
+            stroke="#cc00ff"
+            strokeWidth="1"
+            opacity="0.7"
+          />
+          <line
+            x1="147"
+            y1="641"
+            x2="161"
+            y2="641"
+            stroke="#cc00ff"
+            strokeWidth="1"
+            opacity="0.5"
+          />
+          <ellipse
+            cx="154"
+            cy="660"
+            rx="13"
+            ry="5"
+            fill="#0a0a0a"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+
+          {/* Front-right leg */}
+          <rect x="174" y="590" width="18" height="70" rx="8" fill="#c49a45" />
+          <circle
+            cx="183"
+            cy="626"
+            r="10"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+          />
+          <circle cx="183" cy="626" r="5" fill="#cc00ff" opacity="0.7" />
+          <ellipse
+            cx="183"
+            cy="660"
+            rx="13"
+            ry="5"
+            fill="#0a0a0a"
+            stroke="#cc00ff"
+            strokeWidth="1"
+          />
+
+          {/* === NECK === */}
+          <path
+            d="M 158 482 Q 162 428 172 365 Q 178 335 185 315"
+            stroke="#d4a855"
+            strokeWidth="34"
+            fill="none"
+            strokeLinecap="round"
+          />
+          {/* Neon neck spots */}
+          <ellipse
+            className="spot"
+            cx="163"
+            cy="456"
+            rx="9"
+            ry="13"
+            fill="#cc00ff"
+            opacity="0.55"
+            transform="rotate(-10 163 456)"
+          />
+          <ellipse
+            className="spot"
+            cx="168"
+            cy="412"
+            rx="8"
+            ry="11"
+            fill="#9900cc"
+            opacity="0.55"
+            transform="rotate(-15 168 412)"
+          />
+          <ellipse
+            className="spot"
+            cx="174"
+            cy="372"
+            rx="7"
+            ry="9"
+            fill="#cc00ff"
+            opacity="0.5"
+            transform="rotate(-20 174 372)"
+          />
+          {/* Neck cyber brace */}
+          <rect
+            x="157"
+            y="393"
+            width="33"
+            height="20"
+            rx="5"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+            opacity="0.9"
+          />
+          <line
+            x1="162"
+            y1="403"
+            x2="185"
+            y2="403"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+            opacity="0.8"
+          />
+
+          {/* === CYBER ARM holding joint === */}
+          <path
+            d="M 192 518 Q 212 488 220 455 Q 226 428 212 408 Q 208 398 210 382"
+            stroke="#1a001a"
+            strokeWidth="13"
+            fill="none"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 192 518 Q 212 488 220 455 Q 226 428 212 408 Q 208 398 210 382"
+            stroke="#cc00ff"
+            strokeWidth="2"
+            fill="none"
+            strokeLinecap="round"
+            strokeDasharray="6 4"
+          />
+          <circle
+            cx="220"
+            cy="455"
+            r="8"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+          />
+          <circle cx="220" cy="455" r="4" fill="#cc00ff" opacity="0.75" />
+          {/* Claw fingers */}
+          <path
+            d="M 208 377 L 202 366 L 198 361"
+            stroke="#cc00ff"
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 211 376 L 208 364 L 205 359"
+            stroke="#cc00ff"
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 214 377 L 214 365 L 213 360"
+            stroke="#cc00ff"
+            strokeWidth="3"
+            fill="none"
+            strokeLinecap="round"
+          />
+
+          {/* === JOINT === */}
+          <rect
+            x="207"
+            y="346"
+            width="30"
+            height="7"
+            rx="3.5"
+            fill="#f5e6c0"
+            transform="rotate(-25 207 346)"
+          />
+          <rect
+            x="207"
+            y="346"
+            width="10"
+            height="7"
+            rx="3"
+            fill="#a0522d"
+            transform="rotate(-25 207 346)"
+          />
+          {/* Ember */}
+          <circle cx="208" cy="344" r="5" fill="#ff6600" opacity="0.95" />
+          <circle cx="208" cy="344" r="8" fill="#ff4400" opacity="0.4" />
+          <circle cx="208" cy="344" r="12" fill="#ff2200" opacity="0.15" />
+
+          {/* === SMOKE (neon purple tinted) === */}
+          <circle
+            className="smoke1"
+            cx="210"
+            cy="340"
+            r="7"
+            fill="#cc88ff"
+            opacity="0.88"
+          />
+          <circle
+            className="smoke2"
+            cx="205"
+            cy="324"
+            r="9"
+            fill="#bb77ee"
+            opacity="0.75"
+          />
+          <circle
+            className="smoke3"
+            cx="212"
+            cy="308"
+            r="11"
+            fill="#aa66dd"
+            opacity="0.65"
+          />
+          <circle
+            className="smoke4"
+            cx="206"
+            cy="290"
+            r="13"
+            fill="#9955cc"
+            opacity="0.55"
+          />
+          <circle
+            className="smoke5"
+            cx="214"
+            cy="272"
+            r="15"
+            fill="#8844bb"
+            opacity="0.45"
+          />
+
+          {/* === HEAD (giraffe shape + alien features) === */}
+          <ellipse cx="192" cy="298" rx="30" ry="24" fill="#d4a855" />
+          {/* Neon alien spots on head */}
+          <ellipse
+            className="spot"
+            cx="182"
+            cy="291"
+            rx="8"
+            ry="6"
+            fill="#cc00ff"
+            opacity="0.55"
+          />
+          <ellipse
+            className="spot"
+            cx="202"
+            cy="302"
+            rx="7"
+            ry="5"
+            fill="#9900cc"
+            opacity="0.55"
+          />
+
+          {/* Ossicones (horns) with neon tips */}
+          <line
+            x1="180"
+            y1="277"
+            x2="173"
+            y2="250"
+            stroke="#c49a45"
+            strokeWidth="6"
+            strokeLinecap="round"
+          />
+          <circle cx="172" cy="247" r="5" fill="#c49a45" />
+          <circle
+            className="ant"
+            cx="172"
+            cy="247"
+            r="4"
+            fill="#cc00ff"
+            opacity="0.9"
+          />
+          <line
+            x1="196"
+            y1="276"
+            x2="196"
+            y2="248"
+            stroke="#c49a45"
+            strokeWidth="6"
+            strokeLinecap="round"
+          />
+          <circle cx="196" cy="245" r="5" fill="#c49a45" />
+          <circle
+            className="ant"
+            cx="196"
+            cy="245"
+            r="4"
+            fill="#00ffcc"
+            opacity="0.9"
+            style={{ animationDelay: "0.8s" }}
+          />
+
+          {/* === ALIEN EYES on giraffe head === */}
+          {/* Left big alien eye */}
+          <ellipse
+            cx="176"
+            cy="302"
+            rx="14"
+            ry="12"
+            fill="#0a001a"
+            stroke="#00ffcc"
+            strokeWidth="2.5"
+            className="eye-l"
+          />
+          <ellipse cx="176" cy="302" rx="9" ry="8" fill="#003322" />
+          <ellipse cx="176" cy="302" rx="5" ry="4.5" fill="#006644" />
+          <ellipse cx="176" cy="302" rx="2.5" ry="4" fill="#000" />
+          <ellipse
+            cx="176"
+            cy="302"
+            rx="2"
+            ry="3"
+            fill="#00ffcc"
+            opacity="0.9"
+          />
+          <circle cx="171" cy="297" r="2" fill="#fff" opacity="0.5" />
+
+          {/* Right alien eye */}
+          <ellipse
+            cx="204"
+            cy="300"
+            rx="13"
+            ry="11"
+            fill="#0a001a"
+            stroke="#cc00ff"
+            strokeWidth="2.5"
+            className="eye-r"
+          />
+          <ellipse cx="204" cy="300" rx="8" ry="7" fill="#1a0030" />
+          <ellipse cx="204" cy="300" rx="4.5" ry="4" fill="#440066" />
+          <ellipse cx="204" cy="300" rx="2" ry="3.5" fill="#000" />
+          <ellipse
+            cx="204"
+            cy="300"
+            rx="1.8"
+            ry="2.8"
+            fill="#cc00ff"
+            opacity="0.9"
+          />
+          <circle cx="199" cy="295" r="2" fill="#fff" opacity="0.5" />
+
+          {/* Cybernetic skull plate */}
+          <path
+            d="M 168 286 Q 178 274 192 274 Q 205 274 212 281"
+            stroke="#cc00ff"
+            strokeWidth="2"
+            fill="none"
+            opacity="0.8"
+            className="neon-outline"
+          />
+          <circle
+            cx="172"
+            cy="288"
+            r="2.5"
+            fill="#888"
+            stroke="#cc00ff"
+            strokeWidth="0.8"
+          />
+          <circle
+            cx="210"
+            cy="284"
+            r="2.5"
+            fill="#888"
+            stroke="#cc00ff"
+            strokeWidth="0.8"
+          />
+          <line
+            x1="174"
+            y1="284"
+            x2="208"
+            y2="280"
+            stroke="#cc00ff"
+            strokeWidth="0.8"
+            opacity="0.6"
+          />
+
+          {/* Nose slits (alien style) */}
+          <ellipse
+            cx="213"
+            cy="308"
+            rx="3"
+            ry="3.5"
+            fill="#cc00ff"
+            opacity="0.7"
+          />
+          <ellipse
+            cx="219"
+            cy="310"
+            rx="3"
+            ry="3.5"
+            fill="#cc00ff"
+            opacity="0.7"
+          />
+
+          {/* Smirk */}
+          <path
+            d="M 206 318 Q 214 325 220 319"
+            stroke="#cc00ff"
+            strokeWidth="2.5"
+            fill="none"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 206 318 Q 214 325 220 319"
+            stroke="#ff88ff"
+            strokeWidth="0.8"
+            fill="none"
+            strokeLinecap="round"
+            opacity="0.5"
+          />
+
+          {/* Ear */}
+          <ellipse cx="218" cy="298" rx="7" ry="9" fill="#c49a45" />
+          <ellipse
+            cx="218"
+            cy="298"
+            rx="4"
+            ry="5"
+            fill="#cc00ff"
+            opacity="0.3"
+          />
+
+          {/* Side antenna ears */}
+          <ellipse
+            cx="162"
+            cy="300"
+            rx="6"
+            ry="10"
+            fill="#1a001a"
+            stroke="#cc00ff"
+            strokeWidth="1.5"
+          />
+          <ellipse
+            cx="162"
+            cy="300"
+            rx="3"
+            ry="5"
+            fill="#cc00ff"
+            opacity="0.35"
+          />
+        </g>
       </svg>
     </div>
   );
