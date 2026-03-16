@@ -16,6 +16,8 @@ import {
   Library,
   ListPlus,
   Loader2,
+  Maximize2,
+  Minimize2,
   Newspaper,
   Play,
   PlayCircle,
@@ -23,8 +25,10 @@ import {
   Search,
   SearchX,
   Share2,
+  Shuffle,
   SkipForward,
   Trash2,
+  X,
   Youtube,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
@@ -339,6 +343,9 @@ export default function App() {
   const [appState, setAppState] = useState<AppState>("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+  const [playerMode, setPlayerMode] = useState<"full" | "mini" | "closed">(
+    "closed",
+  );
   const [activeTab, setActiveTab] = useState<Tab>("search");
   const [libraryView, setLibraryView] = useState<LibraryView>("main");
   const [openPlaylistId, setOpenPlaylistId] = useState<string | null>(null);
@@ -347,6 +354,7 @@ export default function App() {
   const [searchFilter, setSearchFilter] = useState<SearchFilter>("all");
   const [currentPlaylistContext, setCurrentPlaylistContext] =
     useState<PlaylistContext | null>(null);
+  const [shuffleMode, setShuffleMode] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const lib = useLibrary();
@@ -355,6 +363,26 @@ export default function App() {
     window.Telegram?.WebApp?.ready();
     window.Telegram?.WebApp?.expand();
   }, []);
+
+  // Auto-play next track when YouTube video ends
+  useEffect(() => {
+    function handleYTMessage(e: MessageEvent) {
+      if (typeof e.data !== "string") return;
+      try {
+        const data = JSON.parse(e.data);
+        // YouTube sends info events; playerState 0 = ended
+        if (data.event === "infoDelivery" && data.info?.playerState === 0) {
+          if (currentPlaylistContext) {
+            playNextInPlaylist();
+          }
+        }
+      } catch {
+        // ignore non-JSON messages
+      }
+    }
+    window.addEventListener("message", handleYTMessage);
+    return () => window.removeEventListener("message", handleYTMessage);
+  }, [currentPlaylistContext]);
 
   async function handleSearch(filterOverride?: SearchFilter) {
     const q = query.trim();
@@ -400,17 +428,37 @@ export default function App() {
   function openVideo(video: VideoItem, playlistContext?: PlaylistContext) {
     setSelectedVideo(video);
     setCurrentPlaylistContext(playlistContext ?? null);
+    setPlayerMode("full");
   }
 
   function closePlayer() {
     setSelectedVideo(null);
     setCurrentPlaylistContext(null);
+    setPlayerMode("closed");
+  }
+
+  function handleTabChange(tab: Tab) {
+    if (playerMode === "full") {
+      setPlayerMode("mini");
+    }
+    setActiveTab(tab);
   }
 
   function playNextInPlaylist() {
     if (!currentPlaylistContext) return;
-    const nextIndex = currentPlaylistContext.index + 1;
-    const nextVideo = currentPlaylistContext.items[nextIndex];
+    const items = currentPlaylistContext.items;
+    const currentIndex = currentPlaylistContext.index;
+    let nextIndex: number;
+    if (shuffleMode) {
+      const remaining = items
+        .map((_, i) => i)
+        .filter((i) => i !== currentIndex);
+      if (remaining.length === 0) return;
+      nextIndex = remaining[Math.floor(Math.random() * remaining.length)];
+    } else {
+      nextIndex = currentIndex + 1;
+    }
+    const nextVideo = items[nextIndex];
     if (!nextVideo) return;
     openVideo(nextVideo, {
       ...currentPlaylistContext,
@@ -546,7 +594,7 @@ export default function App() {
         >
           <AnimatePresence mode="wait">
             {/* Player View — overlays any tab */}
-            {selectedVideo && (
+            {selectedVideo && playerMode === "full" && (
               <motion.div
                 key="player"
                 data-ocid="player.panel"
@@ -557,29 +605,36 @@ export default function App() {
                 className="absolute inset-0 z-10 flex flex-col overflow-y-auto"
                 style={{ backgroundColor: C.bg }}
               >
-                {/* Back button */}
-                <button
-                  type="button"
-                  data-ocid="player.close_button"
-                  onClick={closePlayer}
-                  className="flex items-center gap-2 px-4 py-3 text-sm font-medium"
-                  style={C.limeText}
-                >
-                  <ArrowLeft size={18} />
-                  Back
-                </button>
-
-                {/* 16:9 iframe */}
-                <div className="w-full" style={{ aspectRatio: "16/9" }}>
-                  <iframe
-                    key={selectedVideo.videoId}
-                    src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
-                    allow="autoplay; encrypted-media"
-                    allowFullScreen
-                    className="w-full h-full"
-                    title={selectedVideo.title}
-                  />
+                {/* Header row: minimize + close */}
+                <div className="flex items-center justify-between px-4 py-3">
+                  <button
+                    type="button"
+                    data-ocid="player.minimize_button"
+                    onClick={() => setPlayerMode("mini")}
+                    className="flex items-center gap-2 text-sm font-medium"
+                    style={C.limeText}
+                  >
+                    <ArrowLeft size={18} />
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    data-ocid="player.close_button"
+                    onClick={closePlayer}
+                    className="flex items-center gap-1 text-xs px-2 py-1 rounded-lg transition-opacity active:opacity-60"
+                    style={{
+                      color: C.metal,
+                      backgroundColor: C.surface,
+                      border: C.border,
+                    }}
+                  >
+                    <X size={14} />
+                    Close
+                  </button>
                 </div>
+
+                {/* 16:9 iframe placeholder — actual iframe is in the floating container below */}
+                <div className="w-full" style={{ aspectRatio: "16/9" }} />
 
                 {/* Video info + actions */}
                 <div className="px-4 pt-3 pb-4">
@@ -664,6 +719,30 @@ export default function App() {
                       <Share2 size={15} />
                       Share to Chat
                     </button>
+                    {currentPlaylistContext && (
+                      <button
+                        type="button"
+                        data-ocid="player.shuffle_toggle"
+                        onClick={() => setShuffleMode((s) => !s)}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-all active:opacity-70"
+                        style={{
+                          backgroundColor: shuffleMode
+                            ? "rgba(170,255,0,0.15)"
+                            : C.surface,
+                          border: shuffleMode
+                            ? `1px solid ${C.lime}`
+                            : "1px solid #3a3a3a",
+                          color: shuffleMode ? C.lime : C.dim,
+                          boxShadow: shuffleMode
+                            ? "0 0 8px rgba(170,255,0,0.2)"
+                            : "none",
+                        }}
+                        title={shuffleMode ? "Shuffle On" : "Shuffle Off"}
+                      >
+                        <Shuffle size={15} />
+                        Shuffle
+                      </button>
+                    )}
                     {hasNext && (
                       <button
                         type="button"
@@ -1456,7 +1535,7 @@ export default function App() {
           <button
             type="button"
             data-ocid="nav.search_tab"
-            onClick={() => setActiveTab("search")}
+            onClick={() => handleTabChange("search")}
             className="flex-1 flex flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition-all"
             style={{
               color: activeTab === "search" ? C.lime : C.metal,
@@ -1470,7 +1549,7 @@ export default function App() {
           <button
             type="button"
             data-ocid="nav.library_tab"
-            onClick={() => setActiveTab("library")}
+            onClick={() => handleTabChange("library")}
             className="flex-1 flex flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition-all"
             style={{
               color: activeTab === "library" ? C.lime : C.metal,
@@ -1484,6 +1563,140 @@ export default function App() {
             <span>Library</span>
           </button>
         </nav>
+
+        {/* Floating iframe — persists across full/mini modes */}
+        {selectedVideo && playerMode !== "closed" && (
+          <>
+            {/* Full-screen iframe overlay (behind player panel UI) */}
+            <div
+              style={{
+                position: "fixed",
+                top: playerMode === "full" ? 48 : undefined,
+                left: playerMode === "full" ? 0 : undefined,
+                right:
+                  playerMode === "full"
+                    ? 0
+                    : playerMode === "mini"
+                      ? 12
+                      : undefined,
+                bottom:
+                  playerMode === "full"
+                    ? 56
+                    : playerMode === "mini"
+                      ? 72
+                      : undefined,
+                width:
+                  playerMode === "full"
+                    ? "100%"
+                    : playerMode === "mini"
+                      ? 220
+                      : undefined,
+                height:
+                  playerMode === "full" ? "calc(100% - 104px)" : undefined,
+                aspectRatio: playerMode === "mini" ? "16/9" : undefined,
+                zIndex: playerMode === "full" ? 9 : 28,
+                display: "block",
+                borderRadius: playerMode === "mini" ? "10px 10px 0 0" : 0,
+                overflow: "hidden",
+                pointerEvents: playerMode === "full" ? "auto" : "none",
+              }}
+            >
+              <iframe
+                key={selectedVideo.videoId}
+                src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1&enablejsapi=1`}
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  border: "none",
+                  display: "block",
+                }}
+                title={selectedVideo.title}
+              />
+            </div>
+
+            {/* Mini-player card UI (tap to expand) */}
+            {playerMode === "mini" && (
+              <motion.div
+                key="mini-player"
+                data-ocid="player.mini_card"
+                initial={{ y: 80, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 80, opacity: 0 }}
+                transition={{ type: "spring", damping: 26, stiffness: 300 }}
+                style={{
+                  position: "fixed",
+                  bottom: 64,
+                  right: 12,
+                  width: 220,
+                  zIndex: 29,
+                  borderRadius: 10,
+                  overflow: "hidden",
+                  border: `1.5px solid ${C.lime}`,
+                  backgroundColor: C.surface,
+                  boxShadow:
+                    "0 4px 24px rgba(0,0,0,0.7), 0 0 12px rgba(170,255,0,0.15)",
+                }}
+              >
+                {/* Video area (pointer-events enabled for tap to expand) */}
+                <button
+                  type="button"
+                  data-ocid="player.mini_expand_button"
+                  onClick={() => setPlayerMode("full")}
+                  className="w-full relative block"
+                  style={{ aspectRatio: "16/9", background: C.bg }}
+                >
+                  {/* Overlay to capture taps (iframe swallows pointer events) */}
+                  <div
+                    className="absolute inset-0 flex items-center justify-center"
+                    style={{ zIndex: 2, background: "rgba(0,0,0,0.0)" }}
+                  >
+                    <div
+                      className="rounded-full p-1"
+                      style={{
+                        backgroundColor: "rgba(0,0,0,0.5)",
+                        backdropFilter: "blur(4px)",
+                      }}
+                    >
+                      <Maximize2 size={14} style={{ color: C.lime }} />
+                    </div>
+                  </div>
+                </button>
+
+                {/* Title strip */}
+                <div
+                  className="flex items-center gap-1 px-2 py-1.5"
+                  style={{ borderTop: "1px solid rgba(170,255,0,0.2)" }}
+                >
+                  <div className="flex-1 min-w-0">
+                    <p
+                      className="text-xs font-semibold truncate"
+                      style={{ color: C.lime }}
+                      // biome-ignore lint/security/noDangerouslySetInnerHtml: YouTube API returns HTML entities
+                      dangerouslySetInnerHTML={{ __html: selectedVideo.title }}
+                    />
+                    <p className="text-xs truncate" style={{ color: C.metal }}>
+                      {selectedVideo.channelTitle}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    data-ocid="player.mini_close_button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      closePlayer();
+                    }}
+                    className="flex-shrink-0 p-1 rounded-full transition-opacity active:opacity-60"
+                    style={{ color: C.metal }}
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </>
+        )}
 
         {/* Add to Playlist Dialog */}
         <AddToPlaylistDialog
