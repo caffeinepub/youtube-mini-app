@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark cyborg theme - forced dark always */
+    --tg-bg: #0a0a0a;
+    --tg-text: #aaff00;
+    --tg-hint: #c0c0c0;
+    --tg-btn: #aaff00;
+    --tg-btn-text: #0a0a0a;
+    --tg-secondary-bg: #141414;
+
+    /* Custom theme tokens */
+    --lime: #aaff00;
+    --metal: #c0c0c0;
+    --dark-surface: #111111;
+    --dark-border: #2a2a2a;
+
+    /* OKLCH design tokens — dark cyborg theme */
+    --background: 0.07 0 0;
+    --foreground: 0.9 0.22 130;
+    --card: 0.1 0.005 130;
+    --card-foreground: 0.9 0.22 130;
+    --popover: 0.1 0.005 130;
+    --popover-foreground: 0.9 0.22 130;
+    --primary: 0.9 0.22 130;
+    --primary-foreground: 0.07 0 0;
+    --secondary: 0.15 0.005 130;
+    --secondary-foreground: 0.78 0.04 130;
+    --muted: 0.12 0.003 130;
+    --muted-foreground: 0.62 0.02 130;
+    --accent: 0.15 0.005 130;
+    --accent-foreground: 0.9 0.22 130;
+    --destructive: 0.55 0.22 27;
+    --destructive-foreground: 1 0 0;
+    --border: 0.2 0.01 130;
+    --input: 0.2 0.01 130;
+    --ring: 0.9 0.22 130;
+    --radius: 0.75rem;
+    --chart-1: 0.9 0.22 130;
+    --chart-2: 0.75 0.18 160;
+    --chart-3: 0.65 0.14 200;
+    --chart-4: 0.8 0.12 100;
+    --chart-5: 0.7 0.1 80;
+    --sidebar: 0.08 0.002 130;
+    --sidebar-foreground: 0.9 0.22 130;
+    --sidebar-primary: 0.9 0.22 130;
+    --sidebar-primary-foreground: 0.07 0 0;
+    --sidebar-accent: 0.15 0.005 130;
+    --sidebar-accent-foreground: 0.9 0.22 130;
+    --sidebar-border: 0.2 0.01 130;
+    --sidebar-ring: 0.9 0.22 130;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+  body {
+    background-color: #0a0a0a !important;
+    color: #aaff00 !important;
+    font-family: "Figtree", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* Force dark theme everywhere */
+.tg-bg {
+  background-color: var(--tg-bg);
+}
+.tg-text {
+  color: var(--tg-text);
+}
+.tg-hint {
+  color: var(--tg-hint);
+}
+.tg-secondary-bg {
+  background-color: var(--tg-secondary-bg);
+}
+.tg-btn {
+  background-color: var(--tg-btn);
+  color: var(--tg-btn-text);
+}
+.tg-border {
+  border-color: color-mix(in oklch, var(--tg-hint) 30%, transparent);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Video card hover */
+.video-card {
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.15s
+    ease;
+  border-radius: 8px;
+}
+.video-card:hover {
+  background-color: rgba(170, 255, 0, 0.05);
+}
+.video-card:active {
+  transform: scale(0.98);
+  opacity: 0.85;
+}
+
+/* Search input focus ring */
+.tg-input:focus {
+  outline: 2px solid #aaff00;
+  outline-offset: 0;
+  box-shadow: 0 0 10px rgba(170, 255, 0, 0.3);
+}
+
+/* Input and button metallic styling */
+input,
+textarea,
+select {
+  background-color: #111111 !important;
+  color: #aaff00 !important;
+  border-color: #2a2a2a !important;
+}
+input:focus,
+textarea:focus {
+  border-color: #aaff00 !important;
+  box-shadow: 0 0 8px rgba(170, 255, 0, 0.25) !important;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #555 !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aaff00;
+}
+
+/* Loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner {
+  animation: spin 0.8s linear infinite;
+}
+
+/* Metallic text shimmer for headings */
+@keyframes metalShimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+.metal-shimmer {
+  background: linear-gradient(
+    90deg,
+    #aaff00 0%,
+    #c0c0c0 25%,
+    #aaff00 50%,
+    #c0c0c0 75%,
+    #aaff00 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: metalShimmer 3s linear infinite;
+}
+
+/* Lime green glow effect for active elements */
+.lime-glow {
+  box-shadow: 0 0 12px rgba(170, 255, 0, 0.4), 0 0 24px rgba(170, 255, 0, 0.15);
+}
+
+/* Dialog/modal dark override */
+[data-radix-popper-content-wrapper] {
+  z-index: 100 !important;
+}
+.dark-dialog [role="dialog"],
+[data-state="open"].radix-dialog {
+  background-color: #111111 !important;
+  border: 1px solid #2a2a2a !important;
+  color: #aaff00 !important;
+}
